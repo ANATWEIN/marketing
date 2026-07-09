@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synel One · בונים את הפתרון שלכם</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#F0A01F; --brand-deep:#EE7A1A; --brand-soft:#FEF3DF;
+  --navy:#21457F; --navy-deep:#16294F; --navy-mid:#173257;
+  --cyan:#27C2DD; --cyan-soft:#E7F8FC;
+  --ok:#2FA85A; --ok-soft:#E7F6EC; --warn:#F0A01F; --bad:#E14B4B; --bad-soft:#FBEAEA;
+  --surface:#fff; --bg:#F4F6F9; --text:#1E2A3C; --muted:#6B7A90; --line:#E3E8EF; --line-strong:#CBD5E3;
+  --r-sm:9px; --r-md:13px; --r-lg:16px; --r-xl:22px;
+  --sh:0 1px 2px rgba(30,42,60,.06),0 8px 24px rgba(30,42,60,.07);
+  --sh-lg:0 12px 34px rgba(33,69,127,.16);
+  --font:"Heebo",system-ui,sans-serif; --display:"Rubik","Heebo",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(1100px 460px at 92% -6%,#eaf5f8 0%,transparent 60%),radial-gradient(820px 440px at -8% 0%,#fdf2df 0%,transparent 55%),var(--bg);}
+h1,h2,h3,h4{font-family:var(--display);color:var(--navy);margin:0}
+.ltr{direction:ltr;unicode-bidi:isolate}
+button{font-family:var(--font)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(14px,4vw,40px)}
+
+/* ---------- top brand bar (mirrors the shell) ---------- */
+.appbar{background:linear-gradient(100deg,var(--navy-deep),var(--navy));color:#fff;
+  display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,44px);
+  position:sticky;top:0;z-index:40;box-shadow:0 6px 22px rgba(22,41,79,.28)}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:38px;height:38px;border-radius:10px;background:conic-gradient(from 220deg,var(--brand),var(--brand-deep),var(--brand));display:grid;place-items:center;box-shadow:0 4px 14px rgba(240,160,31,.4)}
+.brand .logo svg{width:22px;height:22px}
+.brand b{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand small{display:block;font-size:11px;color:#a9bcdd;font-weight:500;margin-top:-2px}
+.appbar .who{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.appbar .who .av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--navy));display:grid;place-items:center;font-size:11px}
+
+/* ---------- hero ---------- */
+.hero{padding:46px 0 26px;text-align:center;max-width:820px;margin:0 auto}
+.hero-brand{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:20px}
+.hero-brand .hb-logo{width:44px;height:44px;border-radius:12px;background:conic-gradient(from 220deg,var(--brand),var(--brand-deep),var(--brand));display:grid;place-items:center;box-shadow:0 7px 18px rgba(240,160,31,.36)}
+.hero-brand .hb-logo svg{width:26px;height:26px}
+.hero-brand .hb-name{font-family:var(--display);font-weight:800;font-size:32px;color:var(--navy);letter-spacing:-.02em;line-height:1}
+.kicker{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;font-family:var(--display);
+  font-weight:600;font-size:12px;letter-spacing:.05em;padding:6px 15px;border-radius:999px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(240,160,31,.25)}
+.hero h1{font-size:clamp(30px,5.2vw,50px);font-weight:800;margin:20px 0 14px;letter-spacing:-.015em;line-height:1.08}
+.hero h1 .em{color:var(--brand-deep)}
+.hero p{font-size:clamp(16px,2vw,19px);color:var(--muted);margin:0 auto;max-width:640px}
+.hero p b{color:var(--navy)}
+.hero .slogan{margin:14px auto 18px;font-family:var(--display);font-weight:600;font-size:clamp(15px,2vw,18px);
+  color:var(--navy);display:inline-flex;align-items:center;gap:12px;letter-spacing:.01em}
+.hero .slogan::before,.hero .slogan::after{content:"";width:28px;height:2px;border-radius:2px;background:var(--brand);flex:none}
+
+/* ---------- coverage strip ---------- */
+.gauge{max-width:920px;margin:30px auto 0;background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh);
+  padding:20px 24px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center}
+.gauge .ring{position:relative;width:96px;height:96px;flex:none}
+.gauge .ring svg{transform:rotate(-90deg)}
+.gauge .ring .pct{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.gauge .ring .pct b{font-family:var(--display);font-weight:800;font-size:26px;color:var(--navy);line-height:1}
+.gauge .ring .pct small{display:block;font-size:10px;color:var(--muted);font-weight:600;margin-top:1px}
+.gauge .mid h3{font-size:17px;margin-bottom:4px}
+.gauge .mid p{margin:0;font-size:13.5px;color:var(--muted)}
+.gauge .mid p b{color:var(--navy)}
+.gauge .stat{text-align:center;flex:none;padding-inline-start:22px;border-inline-start:1px solid var(--line)}
+.gauge .stat .big{font-family:var(--display);font-weight:800;font-size:30px;color:var(--brand-deep);line-height:1}
+.gauge .stat .big.zero{color:var(--ok)}
+.gauge .stat small{display:block;font-size:11.5px;color:var(--muted);margin-top:3px;max-width:130px}
+
+/* ---------- configurator canvas ---------- */
+.stage-head{max-width:1180px;margin:44px auto 14px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.stage-head h2{font-size:23px;font-weight:800}
+.stage-head p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+.stage-actions{display:flex;gap:8px}
+.mini{border:1px solid var(--line);background:#fff;color:var(--navy);font-weight:600;font-size:12.5px;padding:8px 13px;border-radius:9px;cursor:pointer;transition:.14s}
+.mini:hover{border-color:var(--navy)}
+.mini.solid{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.stage{position:relative;border-radius:var(--r-xl);overflow:hidden;
+  background:
+    linear-gradient(180deg,rgba(22,41,79,.06),rgba(22,41,79,.02)),
+    repeating-linear-gradient(115deg,rgba(33,69,127,.05) 0 1px,transparent 1px 46px),
+    repeating-linear-gradient(65deg,rgba(33,69,127,.04) 0 1px,transparent 1px 46px),
+    linear-gradient(160deg,#dfe6f0,#eef2f7 55%,#e4ebf3);
+  border:1px solid var(--line);box-shadow:var(--sh-lg);padding:26px clamp(16px,3vw,30px) 30px}
+.stage::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(600px 240px at 80% 0%,rgba(255,255,255,.55),transparent 60%),
+  radial-gradient(500px 300px at 8% 100%,rgba(255,255,255,.35),transparent 60%);pointer-events:none}
+
+.svg-links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+.grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* ---------- module tile ---------- */
+.tile{position:relative;border-radius:var(--r-lg);padding:18px 18px 16px;cursor:pointer;
+  border:1px solid rgba(33,69,127,.16);
+  background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(244,246,249,.78));
+  filter:grayscale(.9) opacity(.62);transition:transform .22s cubic-bezier(.2,.8,.3,1),filter .3s,box-shadow .3s,border-color .2s}
+.tile:hover{filter:grayscale(.55) opacity(.82);transform:translateY(-2px)}
+.tile.on{filter:none;border-color:rgba(240,160,31,.5);
+  background:linear-gradient(165deg,var(--navy),var(--navy-deep));color:#fff;box-shadow:0 16px 34px rgba(22,41,79,.34),0 0 0 1px rgba(240,160,31,.25)}
+.tile.on:hover{transform:translateY(-3px)}
+.tile .head{display:flex;align-items:flex-start;gap:12px;justify-content:space-between}
+.tile .ttl{text-align:right}
+.tile .ttl b{font-family:var(--display);font-weight:800;font-size:17px;color:var(--navy);display:block}
+.tile.on .ttl b{color:#fff}
+.tile .ico{width:52px;height:52px;border-radius:13px;flex:none;display:grid;place-items:center;
+  background:rgba(33,69,127,.08);transition:.3s}
+.tile.on .ico{background:rgba(255,255,255,.1);box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.tile .ico svg{width:30px;height:30px}
+.tile ul{list-style:none;margin:12px 0 0;padding:0}
+.tile li{font-size:12.5px;color:var(--muted);padding-inline-start:16px;position:relative;margin-bottom:3px}
+.tile.on li{color:#c7d5ee}
+.tile li::before{content:"";position:absolute;inset-inline-start:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.tile .foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.tile .price{font-size:12px;color:var(--muted)}
+.tile.on .price{color:#a9bcdd}
+.tile .price b{font-family:var(--display);color:var(--navy);font-size:14px}
+.tile.on .price b{color:#fff}
+.tile .act{border:1.5px solid var(--brand);color:var(--brand-deep);background:transparent;font-weight:700;font-size:13px;
+  padding:7px 16px;border-radius:9px;transition:.16s;pointer-events:none}
+.tile.on .act{background:var(--brand);border-color:var(--brand);color:#16294f}
+.tile .badge-core{position:absolute;top:-9px;inset-inline-end:14px;background:var(--brand);color:#16294f;
+  font-size:10px;font-weight:800;padding:3px 9px;border-radius:999px;box-shadow:0 3px 8px rgba(240,160,31,.4)}
+.tile .info{position:absolute;top:11px;inset-inline-start:11px;width:24px;height:24px;border-radius:8px;
+  border:1px solid rgba(33,69,127,.22);background:rgba(255,255,255,.72);color:var(--navy);
+  font-family:var(--display);font-weight:800;font-size:13px;font-style:italic;display:grid;place-items:center;cursor:help;transition:.16s;z-index:3}
+.tile.on .info{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.26);color:#fff}
+.tile .info:hover{background:var(--brand);border-color:var(--brand);color:#16294f}
+
+/* ---- deep-dive popover ---- */
+.pop{position:fixed;z-index:90;width:340px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--line);
+  border-radius:var(--r-lg);box-shadow:var(--sh-lg);opacity:0;transform:translateY(6px) scale(.98);pointer-events:none;
+  transition:opacity .16s,transform .16s;overflow:hidden}
+.pop.show{opacity:1;transform:none}
+.pop.pinned{pointer-events:auto}
+.pop-head{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;background:linear-gradient(160deg,var(--navy),var(--navy-deep));color:#fff}
+.pop-head .pi{width:42px;height:42px;border-radius:11px;flex:none;background:rgba(255,255,255,.1);display:grid;place-items:center}
+.pop-head .pi svg{width:26px;height:26px}
+.pop-head b{font-family:var(--display);font-size:16px;display:block}
+.pop-head small{color:#c7d5ee;font-size:12.5px;line-height:1.4;display:block;margin-top:3px}
+.pop-head .x{margin-inline-start:auto;background:rgba(255,255,255,.12);border:0;color:#fff;width:24px;height:24px;border-radius:7px;cursor:pointer;font-size:13px;display:none;flex:none}
+.pop.pinned .pop-head .x{display:grid;place-items:center}
+.pop-body{padding:14px 18px 16px}
+.pop-sec h5{font-size:11.5px;letter-spacing:.02em;color:var(--brand-deep);margin:0 0 7px;font-family:var(--display);font-weight:800}
+.pop-sec ul{list-style:none;margin:0 0 14px;padding:0}
+.pop-sec li{font-size:13px;color:var(--text);padding-inline-start:17px;position:relative;margin-bottom:4px;line-height:1.4}
+.pop-sec li::before{content:"";position:absolute;inset-inline-start:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.pop-flow{display:grid;gap:8px;margin-bottom:13px}
+.pf{display:flex;gap:8px;align-items:flex-start;font-size:12px}
+.pf .t{flex:none;font-weight:800;font-size:10px;padding:3px 8px;border-radius:6px;font-family:var(--display);margin-top:1px}
+.pf.recv .t{background:var(--cyan-soft);color:#0f7c92}
+.pf.send .t{background:var(--brand-soft);color:var(--brand-deep)}
+.pf .items{color:var(--muted);line-height:1.5}
+.pf .items b{color:var(--navy);font-weight:600}
+.pop-solo{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-md);padding:10px 12px;font-size:12.5px;color:var(--muted);line-height:1.5}
+.pop-solo b{color:var(--navy)}
+
+/* ---------- what you're missing panel ---------- */
+.missing{max-width:1180px;margin:22px auto 0;background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);
+  box-shadow:var(--sh);overflow:hidden}
+.missing .mh{display:flex;align-items:center;gap:12px;padding:18px 24px;border-bottom:1px solid var(--line)}
+.missing .mh .warn{width:36px;height:36px;border-radius:11px;background:var(--bad-soft);color:var(--bad);display:grid;place-items:center;font-size:20px;flex:none}
+.missing .mh h3{font-size:17px}
+.missing .mh p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.missing .mh .whole{margin-inline-start:auto}
+.missing .list{padding:8px 10px}
+.gap{display:flex;gap:14px;align-items:flex-start;padding:13px 14px;border-radius:var(--r-md);transition:.15s}
+.gap:hover{background:var(--bg)}
+.gap .bk{flex:none;width:30px;height:30px;border-radius:8px;background:var(--bad-soft);color:var(--bad);display:grid;place-items:center;font-size:15px;margin-top:1px}
+.gap .tx b{color:var(--navy);font-size:14px}
+.gap .tx p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.gap .tx p .from{color:var(--text);font-weight:600}
+.allgood{padding:26px 24px;display:flex;gap:14px;align-items:center;background:var(--ok-soft)}
+.allgood .ic{width:44px;height:44px;border-radius:12px;background:#fff;color:var(--ok);display:grid;place-items:center;font-size:24px;flex:none;box-shadow:var(--sh)}
+.allgood b{color:#1c7a3d;font-family:var(--display);font-size:16px;display:block}
+.allgood p{margin:2px 0 0;font-size:13.5px;color:#3c6a4c}
+
+/* ---------- comparison ---------- */
+.compare{max-width:1180px;margin:56px auto 0}
+.compare .ch{text-align:center;margin-bottom:22px}
+.compare .ch h2{font-size:24px;font-weight:800}
+.compare .ch p{margin:6px auto 0;color:var(--muted);font-size:14.5px;max-width:600px}
+.ctable{background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh);overflow:hidden}
+.crow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;align-items:center}
+.crow>div{padding:15px 16px;font-size:13.5px;border-bottom:1px solid var(--line)}
+.crow:last-child>div{border-bottom:0}
+.crow .rl{text-align:right;color:var(--text);font-weight:600}
+.crow .rl small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:1px}
+.crow.head>div{background:var(--bg);font-family:var(--display);font-weight:800;color:var(--navy);text-align:center;border-bottom:1px solid var(--line-strong)}
+.crow.head .us{background:var(--navy);color:#fff;position:relative}
+.crow.head .us::after{content:"מומלץ";position:absolute;top:8px;inset-inline-start:50%;transform:translateX(50%);font-size:9px;background:var(--brand);color:#16294f;padding:1px 7px;border-radius:999px}
+.cell{text-align:center;color:var(--muted)}
+.cell.us{background:rgba(33,69,127,.04);color:var(--navy);font-weight:600}
+.tick{color:var(--ok);font-weight:800}
+.cross{color:var(--bad);font-weight:800}
+.part{color:var(--warn);font-weight:700}
+
+/* ---------- RFQ ---------- */
+.rfq{max-width:1180px;margin:56px auto 70px;display:grid;grid-template-columns:1fr 380px;gap:0;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--sh-lg);overflow:hidden}
+.rfq .form{padding:30px clamp(20px,3vw,34px)}
+.rfq .form h2{font-size:23px;font-weight:800}
+.rfq .form>p{margin:6px 0 20px;color:var(--muted);font-size:14px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+.field label{font-size:12.5px;font-weight:600;color:var(--navy)}
+.field label span{color:var(--bad)}
+.field input,.field textarea{border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-family:var(--font);
+  font-size:14px;color:var(--text);background:#fbfcfe;transition:.14s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(240,160,31,.15)}
+.field textarea{resize:vertical;min-height:74px}
+.selected-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.stag{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px}
+.stag .g{width:6px;height:6px;border-radius:50%;background:var(--brand)}
+.stag.empty{background:var(--bad-soft);color:var(--bad)}
+.submit{margin-top:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-primary{border:0;background:linear-gradient(135deg,var(--brand),var(--brand-deep));color:#16294f;font-weight:800;
+  font-size:15px;padding:13px 26px;border-radius:11px;cursor:pointer;box-shadow:0 8px 20px rgba(240,160,31,.34);transition:.16s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 12px 26px rgba(240,160,31,.42)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.submit small{color:var(--muted);font-size:12px}
+
+.rfq .aside{background:linear-gradient(165deg,var(--navy),var(--navy-deep));color:#fff;padding:30px clamp(18px,2vw,26px);position:relative;overflow:hidden}
+.rfq .aside::before{content:"";position:absolute;top:-40px;inset-inline-start:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(240,160,31,.35),transparent 70%)}
+.rfq .aside h3{color:#fff;font-size:18px;margin-bottom:4px;position:relative}
+.rfq .aside .sub{color:#a9bcdd;font-size:13px;margin-bottom:20px;position:relative}
+.sumline{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.12);position:relative;font-size:13.5px}
+.sumline .k{color:#c7d5ee}
+.sumline .v{font-weight:700;font-family:var(--display)}
+.sumline .v.on{color:var(--brand)}
+.aside .cov{margin-top:20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-md);padding:14px 16px;position:relative}
+.aside .cov .bar{height:9px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:9px}
+.aside .cov .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--cyan));border-radius:999px;transition:width .5s cubic-bezier(.2,.8,.3,1)}
+.aside .cov .lab{display:flex;justify-content:space-between;font-size:12.5px;color:#c7d5ee}
+.aside .cov .lab b{color:#fff}
+
+.toast{position:fixed;bottom:24px;inset-inline-start:50%;transform:translateX(50%) translateY(120px);
+  background:var(--navy-deep);color:#fff;padding:14px 22px;border-radius:12px;box-shadow:var(--sh-lg);z-index:80;
+  display:flex;gap:11px;align-items:center;font-size:14px;transition:transform .4s cubic-bezier(.2,.9,.3,1);max-width:90vw}
+.toast.show{transform:translateX(50%) translateY(0)}
+.toast .ic{width:26px;height:26px;border-radius:50%;background:var(--ok);display:grid;place-items:center;flex:none;font-size:15px}
+
+footer{text-align:center;color:var(--muted);font-size:12px;padding:0 0 40px}
+footer b{color:var(--navy)}
+
+@media(max-width:900px){
+  .gauge{grid-template-columns:1fr;text-align:center;gap:14px}
+  .gauge .stat{border-inline-start:0;border-top:1px solid var(--line);padding-inline-start:0;padding-top:14px}
+  .gauge .stat small{margin-inline:auto}
+  .rfq{grid-template-columns:1fr}
+  .crow{grid-template-columns:1.3fr .9fr .9fr .9fr}
+  .crow>div{padding:11px 8px;font-size:12px}
+}
+@media(max-width:720px){
+  .grid{grid-template-columns:1fr}
+  .svg-links{display:none}
+  .fgrid{grid-template-columns:1fr}
+  .crow{grid-template-columns:1fr;text-align:center}
+  .crow .rl{text-align:center}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== app bar ===== -->
+<div class="appbar">
+  <div class="brand">
+    <span class="logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 0 7 3" stroke="#16294f" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="3.4" fill="#16294f"/></svg>
+    </span>
+    <div>
+      <b>Synel One</b>
+      <small>איחוד מערכות הארגון</small>
+    </div>
+  </div>
+  <div class="who"><span class="av">👤</span>אזור לקוחות ⌄</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ===== hero ===== -->
+  <section class="hero">
+    <div class="hero-brand">
+      <span class="hb-logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 0 7 3" stroke="#16294f" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="12" r="3.4" fill="#16294f"/></svg></span>
+      <span class="hb-name">Synel</span>
+    </div>
+    <span class="kicker"><span class="dot"></span>מכירה מודולרית · פתרון מקצה לקצה</span>
+    <h1 class="motto-h">כי השלם <span class="em">גדול</span> מסכום חלקיו.</h1>
+    <p>הנתון נכנס פעם אחת וזורם לכל המערכות — בלי הקלדה כפולה. בחרו מטה את המודולים שאתם צריכים, וצפו בזמן אמת אילו חיבורים <b>נדלקים</b> ואילו <b>נשברים</b>.</p>
+  </section>
+
+  <!-- ===== coverage gauge ===== -->
+  <div class="gauge">
+    <div class="ring">
+      <svg width="96" height="96" viewBox="0 0 96 96">
+        <circle cx="48" cy="48" r="40" fill="none" stroke="#E3E8EF" stroke-width="10"/>
+        <circle id="ringArc" cx="48" cy="48" r="40" fill="none" stroke="url(#gg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
+        <defs><linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0A01F"/><stop offset="1" stop-color="#27C2DD"/></linearGradient></defs>
+      </svg>
+      <div class="pct"><b id="covPct">0%</b><small>מקצה לקצה</small></div>
+    </div>
+    <div class="mid">
+      <h3 id="covTitle">עדיין לא בחרתם כלום</h3>
+      <p id="covMsg">בחרו מודול אחד לפחות כדי להתחיל. ככל שתוסיפו — יותר נתונים יזרמו אוטומטית ופחות עבודה ידנית.</p>
+    </div>
+    <div class="stat">
+      <div class="big" id="brokenNum">7</div>
+      <small id="brokenLab">חיבורי מידע שעדיין לא פעילים</small>
+    </div>
+  </div>
+
+  <!-- ===== configurator ===== -->
+  <div class="stage-head">
+    <div>
+      <h2>המודולים שלכם</h2>
+      <p>לחצו כדי להוסיף או להסיר. הקווים על הרקע הם זרימת הנתונים בין המערכות.</p>
+    </div>
+    <div class="stage-actions">
+      <button class="mini" id="clearBtn">נקה הכול</button>
+      <button class="mini solid" id="allBtn">בחר את הכול</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <svg class="svg-links" id="links" preserveAspectRatio="none"></svg>
+    <div class="grid" id="grid"><!-- tiles injected --></div>
+  </div>
+
+  <!-- ===== what you're missing ===== -->
+  <div class="missing" id="missing"></div>
+
+  <!-- ===== comparison ===== -->
+  <section class="compare">
+    <div class="ch">
+      <h2>למה לא לקנות חתיכות ממקומות שונים?</h2>
+      <p>אפשר. אבל אז כל חיבור בין המערכות הוא פרויקט אינטגרציה בפני עצמו — או הקלדה כפולה. ככה זה נראה מול השוק.</p>
+    </div>
+    <div class="ctable">
+      <div class="crow head">
+        <div class="rl" style="text-align:right;background:var(--bg)">היכולת</div>
+        <div>מערכות נפרדות</div>
+        <div>ספק מקומי מסורתי</div>
+        <div class="us">Synel One</div>
+      </div>
+      <div class="crow">
+        <div class="rl">נתון אחד לכל המערכות<small>עובד נקלט פעם אחת — מופיע בכל מקום</small></div>
+        <div class="cell"><span class="cross">✕</span><br><small>הקלדה בכל מערכת</small></div>
+        <div class="cell"><span class="part">חלקי</span><br><small>ממשק בהזמנה</small></div>
+        <div class="cell us"><span class="tick">✓</span><br><small>מובנה</small></div>
+      </div>
+      <div class="crow">
+        <div class="rl">שעות נוכחות → שכר אוטומטית</div>
+        <div class="cell"><span class="cross">✕</span></div>
+        <div class="cell"><span class="part">חלקי</span></div>
+        <div class="cell us"><span class="tick">✓</span></div>
+      </div>
+      <div class="crow">
+        <div class="rl">מעטפת אחת + סוכן AI (עמית)<small>ממשק שמשתנה לפי הרשאה</small></div>
+        <div class="cell"><span class="cross">✕</span></div>
+        <div class="cell"><span class="cross">✕</span></div>
+        <div class="cell us"><span class="tick">✓</span></div>
+      </div>
+      <div class="crow">
+        <div class="rl">בחירת מודולים בשירות עצמי + הצעת מחיר מיידית</div>
+        <div class="cell"><span class="cross">✕</span></div>
+        <div class="cell"><span class="cross">✕</span><br><small>רק דרך איש מכירות</small></div>
+        <div class="cell us"><span class="tick">✓</span></div>
+      </div>
+      <div class="crow">
+        <div class="rl">תמיכה ואחריות מגורם אחד</div>
+        <div class="cell"><span class="cross">✕</span><br><small>כמה ספקים</small></div>
+        <div class="cell"><span class="tick">✓</span></div>
+        <div class="cell us"><span class="tick">✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RFQ ===== -->
+  <div class="rfq">
+    <div class="form">
+      <h2>בקשה להצעת מחיר</h2>
+      <p>המודולים שבחרתם למעלה כבר כאן. נחזור אליכם עם הצעה מותאמת תוך יום עסקים.</p>
+      <div class="field full">
+        <label>המודולים שבחרתם</label>
+        <div class="selected-tags" id="rfqTags"></div>
+      </div>
+      <div class="fgrid" style="margin-top:16px">
+        <div class="field"><label>שם הארגון <span>*</span></label><input id="f_org" placeholder="לדוגמה: תעשיות אלפא"></div>
+        <div class="field"><label>איש קשר <span>*</span></label><input id="f_name" placeholder="שם מלא"></div>
+        <div class="field"><label>אימייל <span>*</span></label><input id="f_email" type="email" placeholder="name@company.co.il" dir="ltr" style="text-align:right"></div>
+        <div class="field"><label>טלפון</label><input id="f_phone" type="tel" placeholder="050-0000000" dir="ltr" style="text-align:right"></div>
+        <div class="field"><label>מספר עובדים</label><input id="f_emp" type="number" min="1" placeholder="לדוגמה: 250"></div>
+        <div class="field"><label>מספר אתרים / סניפים</label><input id="f_sites" type="number" min="1" placeholder="לדוגמה: 3"></div>
+        <div class="field full"><label>הערות</label><textarea id="f_notes" placeholder="מערכות קיימות, מועד רצוי להטמעה, צרכים מיוחדים…"></textarea></div>
+      </div>
+      <div class="submit">
+        <button class="btn-primary" id="sendBtn">שלחו לי הצעת מחיר</button>
+        <button class="mini" id="copyBtn">העתק סיכום</button>
+        <small>ללא התחייבות · הנתונים נשמרים אצלנו בלבד</small>
+      </div>
+    </div>
+    <aside class="aside">
+      <h3>סיכום הבקשה</h3>
+      <div class="sub">מתעדכן לפי הבחירות שלכם</div>
+      <div class="sumline"><span class="k">מודולים נבחרים</span><span class="v on" id="sumMods">0 מתוך 7</span></div>
+      <div class="sumline"><span class="k">חיבורי מידע פעילים</span><span class="v" id="sumLinks">0</span></div>
+      <div class="sumline"><span class="k">חיבורים חסרים</span><span class="v" id="sumBroken">7</span></div>
+      <div class="cov">
+        <div class="lab"><span>כיסוי מקצה לקצה</span><b id="sumCov">0%</b></div>
+        <div class="bar"><i id="sumBar" style="width:0%"></i></div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    ההדגמה להמחשה בלבד · אומדני הזרימה מבוססים על ארכיטקטורת <b>Synel One</b> — נתון אחד, מעטפת אחת, עמית אחד.
+  </footer>
+</div>
+
+<div class="pop" id="pop"></div>
+<div class="toast" id="toast"><span class="ic">✓</span><span id="toastMsg"></span></div>
+
+<script>
+/* ---------- icons ---------- */
+const I = {
+  attendance:'<svg viewBox="0 0 24 24" fill="none"><circle cx="10" cy="11" r="7" stroke="#27C2DD" stroke-width="1.8"/><path d="M10 7v4l3 2" stroke="#27C2DD" stroke-width="1.8" stroke-linecap="round"/><path d="M17 15c2 .5 3 1.8 3 3.5V20h-4" stroke="#F0A01F" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  clocks:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="5" stroke="#27C2DD" stroke-width="1.8"/><path d="M12 8v2l1.5 1" stroke="#27C2DD" stroke-width="1.8" stroke-linecap="round"/><path d="M6 15h12l-1 5H7l-1-5Z" stroke="#F0A01F" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+  access:'<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="#27C2DD" stroke-width="1.8"/><path d="M9 9v.01M12 12c1.6 0 2.5-1 2.5-2.4M9 14c.6 1.4 1.7 2 3 2" stroke="#F0A01F" stroke-width="1.8" stroke-linecap="round"/><path d="M9 12h.01M12 9v.01" stroke="#27C2DD" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  hr:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 4c3 0 5 2 5 5 0 2-1 3-1 4l1 4H7l1-4c0-1-1-2-1-4 0-3 2-5 5-5Z" stroke="#27C2DD" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 10c.5.8 1.2 1.2 2 1.2s1.5-.4 2-1.2" stroke="#F0A01F" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  payroll:'<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="7" width="16" height="12" rx="2" stroke="#27C2DD" stroke-width="1.8"/><circle cx="12" cy="13" r="2.6" stroke="#F0A01F" stroke-width="1.8"/><path d="M12 12v2M4 10h16" stroke="#F0A01F" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  pension:'<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="13" rx="2" stroke="#27C2DD" stroke-width="1.8"/><circle cx="12" cy="12.5" r="3" stroke="#F0A01F" stroke-width="1.8"/><path d="M12 12.5h1.5" stroke="#F0A01F" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  clients:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3Z" stroke="#27C2DD" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2" stroke="#F0A01F" stroke-width="1.8"/><path d="M12 12v3" stroke="#F0A01F" stroke-width="1.8" stroke-linecap="round"/></svg>'
+};
+
+/* ---------- module model (grid order = RTL like the shell) ---------- */
+const MODULES = [
+  {id:'attendance', name:'נוכחות',        core:true,  subs:['פרויקטים','סידור עבודה'],                                price:'מ־₪8 /עובד'},
+  {id:'clocks',     name:'איסוף שעונים',  core:false, subs:['סטטוס שעונים','עדכון גרסאות'],                            price:'מ־₪3 /שעון'},
+  {id:'access',     name:'בקרת כניסה',    core:false, subs:['ניהול מורשים','בקרה בין סניפים'],                        price:'מ־₪4 /נקודה'},
+  {id:'hr',         name:'HR',            core:false, subs:['תיק עובד','מסמכים דיגיטליים','קליטה ואונבורדינג'],       price:'מ־₪6 /עובד'},
+  {id:'payroll',    name:'שכר',           core:true,  subs:['חישוב תלוש','תיק עובד','מסמכים דיגיטליים'],              price:'מ־₪9 /עובד'},
+  {id:'pension',    name:'תפעול פנסיוני', core:false, subs:['ניכויים','דיווח לקופות'],                                price:'מ־₪2 /עובד'},
+  {id:'clients',    name:'ניהול לקוחות',  core:false, subs:['הרשאות','אבטחת מידע'],                                   price:'לפי היקף'}
+];
+
+/* ---------- deep-dive content per module ---------- */
+const DETAILS = {
+  attendance:{
+    intro:'מנוע הליבה של זמן העבודה — כל דיווח, היעדרות, משמרת ושעה נוספת במקום אחד.',
+    caps:['שעון נוכחות דיגיטלי, סלולר ואפליקציה','ניהול משמרות וסידור עבודה','מעקב חופשה, מחלה ומכסות','דיווח שעות לפי פרויקט ומשימה','דוחות חריגות ואישורי מנהל'],
+    recv:['דיווחי שעונים מ<b>איסוף שעונים</b>','עובד חדש וסטטוס מ<b>HR</b>','אירועי כניסה מ<b>בקרת כניסה</b>'],
+    send:['שעות מאושרות ל<b>שכר</b> לחישוב התלוש'],
+    solo:'<b>לבד:</b> הזנת שעות ידנית לשכר בכל חודש. <b>משולב:</b> השעות המאושרות עוברות בלחיצה, בלי טעויות.'
+  },
+  clocks:{
+    intro:'השכבה שמחברת את החומרה — כל שעון פיזי בשטח מדווח לענן בזמן אמת.',
+    caps:['חיבור שעוני נוכחות ובקרה בכל האתרים','ניטור סטטוס וזמינות שעונים','עדכון גרסאות מרחוק','זיהוי ביומטרי, כרטיס או קוד','גיבוי דיווחים גם בניתוק תקשורת'],
+    recv:['הגדרות עובדים ומורשים מהמערכת'],
+    send:['דיווחי שעות גולמיים ל<b>נוכחות</b>'],
+    solo:'<b>לבד:</b> מייצאים קובץ ומייבאים ידנית כל יום. <b>משולב:</b> הדיווח נכנס לנוכחות אוטומטית.'
+  },
+  access:{
+    intro:'מי נכנס, לאן ומתי — ניהול הרשאות פיזיות בין כל הסניפים.',
+    caps:['ניהול מורשי כניסה לפי תפקיד','בקרה בין סניפים ואזורים מאובטחים','יומן כניסות ויציאות בזמן אמת','התראות על חריגות','שילוב מלא עם שעוני הנוכחות'],
+    recv:['הרשאות ותפקידים מ<b>ניהול לקוחות</b>','עובד חדש מ<b>HR</b>'],
+    send:['אירועי כניסה ל<b>נוכחות</b> לאימות','יומן אבטחה ל<b>ניהול לקוחות</b>'],
+    solo:'<b>לבד:</b> רשימת מורשים מתוחזקת בנפרד. <b>משולב:</b> מסונכרנת עם ההרשאות הארגוניות.'
+  },
+  hr:{
+    intro:'תיק העובד המלא — מהקליטה ועד הפרישה, כל מסמך והחלטה במקום אחד.',
+    caps:['תיק עובד דיגיטלי מלא','תהליכי קליטה ואונבורדינג','טפסים דיגיטליים (101, 161) בחתימה','מסמכים, אישורים ומכתבי המלצה','ניהול מחזור חיי עובד מקצה לקצה'],
+    recv:['דיווחי נוכחות והיעדרות מ<b>נוכחות</b>'],
+    send:['פרטי עובד, שכר וסטטוס ל<b>שכר</b>','עובד חדש ל<b>נוכחות</b> ול<b>בקרת כניסה</b>'],
+    solo:'<b>לבד:</b> כל שינוי מוקלד שוב בשכר ובנוכחות. <b>משולב:</b> נכנס פעם אחת, מופיע בכל מקום.'
+  },
+  payroll:{
+    intro:'מנוע חישוב התלוש — מדויק, תואם רגולציה, ומוזן אוטומטית מכל המערכות.',
+    caps:['חישוב תלוש מלא ומדויק','ניהול ניכויים, זקיפות והטבות','דיווחים לרשויות ולקופות','תיק עובד ומסמכים דיגיטליים','מסלול ביקורת ותיקונים (audit)'],
+    recv:['שעות מאושרות מ<b>נוכחות</b>','תיק עובד ושינויים מ<b>HR</b>','ניכויים מ<b>תפעול פנסיוני</b>'],
+    send:['דיווחי שכר לרשויות ולקופות'],
+    solo:'<b>לבד:</b> מקבלים קבצים מכל מקור ומקלידים. <b>משולב:</b> הכול זורם — פחות טעויות, פחות זמן.'
+  },
+  pension:{
+    intro:'כל ההתנהלות מול קרנות וקופות הפנסיה — ניכויים, דיווחים והפקדות.',
+    caps:['ניהול ניכויי פנסיה וגמל','דיווח אחיד לקופות (ממשק מעסיקים)','מעקב הפקדות והתאמות','טיפול בהצטרפות ובעזיבה','דוחות רגולטוריים'],
+    recv:['נתוני שכר וניכויים מ<b>שכר</b>'],
+    send:['ניכויים מסונכרנים ל<b>שכר</b>','דיווחים לקופות ולקרנות'],
+    solo:'<b>לבד:</b> התאמות ידניות מול הקופות. <b>משולב:</b> הניכוי נגזר מהתלוש אוטומטית.'
+  },
+  clients:{
+    intro:'שכבת הזהות וההרשאות — מי רואה מה בכל המערכות, ואבטחת המידע הארגונית.',
+    caps:['ניהול משתמשים והרשאות מרכזי','הגדרת תפקידים ורמות גישה','אבטחת מידע ובקרת גישה','ניהול ארגונים ולקוחות (לשכות שירות)','יומני פעילות ואבטחה'],
+    recv:['יומני אבטחה מ<b>בקרת כניסה</b>'],
+    send:['הרשאות ותפקידים לכל המערכות'],
+    solo:'<b>לבד:</b> הרשאות מתוחזקות בכל מערכת בנפרד. <b>משולב:</b> מוגדרות פעם אחת, נאכפות בכל מקום.'
+  }
+};
+
+/* ---------- integrations: what breaks when a link is not active ---------- */
+const LINKS = [
+  {a:'clocks',   b:'attendance', title:'דיווחי השעונים אל הנוכחות', loss:'הדיווחים מהשעונים לא נכנסים לנוכחות אוטומטית — נדרש ייבוא קבצים ידני בכל יום.'},
+  {a:'attendance', b:'payroll',  title:'שעות הנוכחות אל השכר',     loss:'שעות, היעדרויות ושעות נוספות לא זורמות לשכר — הקלדה ידנית מחדש בכל מחזור שכר.'},
+  {a:'hr',       b:'payroll',    title:'תיק העובד אל השכר',         loss:'קליטת עובד, שינוי שכר וסיום העסקה לא מתעדכנים בשכר — כפל הקלדה ופערי נתונים.'},
+  {a:'hr',       b:'attendance', title:'תיק העובד אל הנוכחות',      loss:'עובד חדש לא נפתח אוטומטית בנוכחות — מנהל התפעול פותח אותו שוב ידנית.'},
+  {a:'access',   b:'attendance', title:'אירועי כניסה אל הנוכחות',   loss:'אירועי הכניסה לא מאמתים נוכחות בפועל — אין הצלבה בין מי שנכנס למי שדווח.'},
+  {a:'pension',  b:'payroll',    title:'ניכויי הפנסיה אל השכר',     loss:'ניכויי הפנסיה לא מסונכרנים עם התלוש — התאמות ידניות מול הקופות.'},
+  {a:'clients',  b:'access',     title:'ההרשאות אל בקרת הכניסה',    loss:'ניהול המורשים לא מסונכרן עם ההרשאות הארגוניות — הרשאות מתוחזקות פעמיים.'}
+];
+
+const state = new Set();
+const gridEl = document.getElementById('grid');
+const linksSvg = document.getElementById('links');
+
+/* build tiles */
+MODULES.forEach(m=>{
+  const t=document.createElement('div');
+  t.className='tile'; t.dataset.id=m.id; t.setAttribute('role','button'); t.tabIndex=0;
+  t.innerHTML=`
+    ${m.core?'<span class="badge-core">מומלץ להתחיל כאן</span>':''}
+    <button class="info" tabindex="-1" aria-label="הסבר על ${m.name}">i</button>
+    <div class="head">
+      <div class="ttl"><b>${m.name}</b></div>
+      <span class="ico">${I[m.id]}</span>
+    </div>
+    <ul>${m.subs.map(s=>`<li>${s}</li>`).join('')}</ul>
+    <div class="foot">
+      <span class="price"><b>${m.price}</b></span>
+      <button class="act" tabindex="-1">הוסף</button>
+    </div>`;
+  t.addEventListener('click',()=>toggle(m.id));
+  t.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(m.id);}});
+  t.addEventListener('mouseenter',()=>showPop(m.id,t,false));
+  t.addEventListener('mouseleave',hidePopSoft);
+  t.addEventListener('focus',()=>showPop(m.id,t,false));
+  t.addEventListener('blur',hidePopSoft);
+  const ib=t.querySelector('.info');
+  ib.addEventListener('click',e=>{e.stopPropagation();showPop(m.id,t,true);});
+  gridEl.appendChild(t);
+});
+
+function toggle(id){
+  state.has(id)?state.delete(id):state.add(id);
+  render();
+}
+
+function render(){
+  // tiles
+  document.querySelectorAll('.tile').forEach(t=>{
+    const on=state.has(t.dataset.id);
+    t.classList.toggle('on',on);
+    t.querySelector('.act').textContent=on?'נבחר ✓':'הוסף';
+  });
+
+  const active = LINKS.filter(l=>state.has(l.a)&&state.has(l.b));
+  const broken = LINKS.filter(l=>!(state.has(l.a)&&state.has(l.b)));
+  const cov = Math.round((active.length/LINKS.length)*100);
+  const n = state.size;
+
+  // gauge
+  const arc=document.getElementById('ringArc'); const C=251.2;
+  arc.style.strokeDashoffset = C-(C*cov/100);
+  document.getElementById('covPct').textContent=cov+'%';
+  const bn=document.getElementById('brokenNum');
+  bn.textContent=broken.length; bn.classList.toggle('zero',broken.length===0);
+  document.getElementById('brokenLab').textContent = broken.length===0?'הכול מחובר — אפס הקלדה כפולה':'חיבורי מידע שעדיין לא פעילים';
+
+  const title=document.getElementById('covTitle'), msg=document.getElementById('covMsg');
+  if(n===0){title.textContent='עדיין לא בחרתם כלום';msg.innerHTML='בחרו מודול אחד לפחות כדי להתחיל. ככל שתוסיפו — יותר נתונים יזרמו אוטומטית ופחות עבודה ידנית.';}
+  else if(broken.length===0){title.textContent='פתרון מלא מקצה לקצה 🎯';msg.innerHTML='כל הנתונים זורמים אוטומטית בין המערכות. <b>נתון אחד, מעטפת אחת, אפס הקלדה כפולה.</b>';}
+  else {title.textContent=`בחרתם ${n} מתוך 7 מודולים`;msg.innerHTML=`עוד <b>${broken.length} חיבורים</b> מחכים להתחבר. גללו למטה לראות בדיוק מה עדיין לא זורם אוטומטית.`;}
+
+  renderMissing(broken,active,n);
+  renderSummary(n,active.length,broken.length,cov);
+  requestAnimationFrame(drawLinks);
+}
+
+function renderMissing(broken,active,n){
+  const el=document.getElementById('missing');
+  if(n===0){ el.innerHTML=''; el.style.display='none'; return; }
+  el.style.display='block';
+  if(broken.length===0){
+    el.innerHTML=`<div class="allgood"><span class="ic">🎯</span><div><b>שום דבר לא הולך לאיבוד</b><p>כל שבעת החיבורים פעילים. עובד נקלט פעם אחת ומופיע בכל מקום — נוכחות, שכר, פנסיה, הרשאות.</p></div></div>`;
+    return;
+  }
+  el.innerHTML=`
+    <div class="mh">
+      <span class="warn">!</span>
+      <div><h3>מה אתם עדיין מפסידים</h3><p>${broken.length} חיבורים שהיו נסגרים אם המערכות היו מדברות — כרגע זה נופל על עבודה ידנית.</p></div>
+      <button class="mini solid whole" id="fillBtn">סגור את כל הפערים</button>
+    </div>
+    <div class="list">
+      ${broken.map(l=>{
+        const A=MODULES.find(m=>m.id===l.a).name, B=MODULES.find(m=>m.id===l.b).name;
+        return `<div class="gap"><span class="bk">⚡</span><div class="tx"><b>${l.title}</b><p><span class="from">${A} ⟶ ${B}:</span> ${l.loss}</p></div></div>`;
+      }).join('')}
+    </div>`;
+  document.getElementById('fillBtn').addEventListener('click',()=>{MODULES.forEach(m=>state.add(m.id));render();toast('הוספנו את כל המודולים — הפתרון מחובר מקצה לקצה');});
+}
+
+function renderSummary(n,activeN,brokenN,cov){
+  document.getElementById('sumMods').textContent=`${n} מתוך 7`;
+  document.getElementById('sumLinks').textContent=activeN;
+  document.getElementById('sumBroken').textContent=brokenN;
+  document.getElementById('sumCov').textContent=cov+'%';
+  document.getElementById('sumBar').style.width=cov+'%';
+  document.getElementById('sendBtn').disabled = n===0;
+
+  const tags=document.getElementById('rfqTags');
+  if(n===0){tags.innerHTML='<span class="stag empty">עדיין לא נבחרו מודולים — בחרו למעלה</span>';return;}
+  tags.innerHTML=MODULES.filter(m=>state.has(m.id)).map(m=>`<span class="stag"><span class="g"></span>${m.name}</span>`).join('');
+}
+
+/* ---------- data-flow lines on the stage ---------- */
+function centerOf(id){
+  const t=document.querySelector(`.tile[data-id="${id}"]`);
+  const s=linksSvg.getBoundingClientRect(); const r=t.getBoundingClientRect();
+  return {x:r.left-s.left+r.width/2, y:r.top-s.top+r.height/2};
+}
+function drawLinks(){
+  const s=linksSvg.getBoundingClientRect();
+  linksSvg.setAttribute('viewBox',`0 0 ${s.width} ${s.height}`);
+  linksSvg.innerHTML='';
+  LINKS.forEach(l=>{
+    const on=state.has(l.a)&&state.has(l.b);
+    const p1=centerOf(l.a), p2=centerOf(l.b);
+    const mx=(p1.x+p2.x)/2, my=(p1.y+p2.y)/2 - 22;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',`M ${p1.x} ${p1.y} Q ${mx} ${my} ${p2.x} ${p2.y}`);
+    path.setAttribute('fill','none');
+    if(on){
+      path.setAttribute('stroke','url(#flow)'); path.setAttribute('stroke-width','3');
+      path.setAttribute('opacity','.9');
+    }else{
+      path.setAttribute('stroke','#E14B4B'); path.setAttribute('stroke-width','1.6');
+      path.setAttribute('stroke-dasharray','5 6'); path.setAttribute('opacity','.28');
+    }
+    linksSvg.appendChild(path);
+    if(!on){ // small break marker
+      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',mx);c.setAttribute('cy',(p1.y+p2.y)/2-11);c.setAttribute('r','3');
+      c.setAttribute('fill','#E14B4B');c.setAttribute('opacity','.4');linksSvg.appendChild(c);
+    }
+  });
+  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML='<linearGradient id="flow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F0A01F"/><stop offset="1" stop-color="#27C2DD"/></linearGradient>';
+  linksSvg.appendChild(defs);
+}
+
+/* ---------- controls ---------- */
+document.getElementById('clearBtn').addEventListener('click',()=>{state.clear();render();});
+document.getElementById('allBtn').addEventListener('click',()=>{MODULES.forEach(m=>state.add(m.id));render();});
+
+function summaryText(){
+  const mods=MODULES.filter(m=>state.has(m.id)).map(m=>m.name).join(', ')||'—';
+  const active=LINKS.filter(l=>state.has(l.a)&&state.has(l.b)).length;
+  const cov=Math.round((active/LINKS.length)*100);
+  return `בקשה להצעת מחיר · Synel One
+ארגון: ${val('f_org')||'—'}
+איש קשר: ${val('f_name')||'—'} | ${val('f_email')||'—'} | ${val('f_phone')||'—'}
+עובדים: ${val('f_emp')||'—'} | אתרים: ${val('f_sites')||'—'}
+מודולים: ${mods}
+כיסוי מקצה לקצה: ${cov}% (${active}/${LINKS.length} חיבורים)
+הערות: ${val('f_notes')||'—'}`;
+}
+const val=id=>document.getElementById(id).value.trim();
+
+document.getElementById('copyBtn').addEventListener('click',()=>{
+  navigator.clipboard?.writeText(summaryText()).then(
+    ()=>toast('הסיכום הועתק — אפשר להדביק במייל'),
+    ()=>toast('לא הצלחנו להעתיק, נסו שוב')
+  );
+});
+document.getElementById('sendBtn').addEventListener('click',()=>{
+  if(state.size===0) return;
+  if(!val('f_org')||!val('f_name')||!val('f_email')){toast('נא למלא שם ארגון, איש קשר ואימייל');return;}
+  // in production: POST summaryText() to CRM / endpoint
+  toast('הבקשה נשלחה — נחזור אליכם תוך יום עסקים');
+});
+
+let toastT;
+function toast(msg){
+  const el=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  el.classList.add('show'); clearTimeout(toastT);
+  toastT=setTimeout(()=>el.classList.remove('show'),3200);
+}
+
+/* ---------- deep-dive popover ---------- */
+const pop=document.getElementById('pop');
+let popTimer, popPinned=false, popAnchor=null;
+function popHTML(m,d){
+  return `<div class="pop-head"><span class="pi">${I[m.id]}</span><div><b>${m.name}</b><small>${d.intro}</small></div><button class="x" aria-label="סגור">✕</button></div>
+  <div class="pop-body">
+    <div class="pop-sec"><h5>מה זה עושה</h5><ul>${d.caps.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+    <div class="pop-flow">
+      <div class="pf recv"><span class="t">מקבל</span><span class="items">${d.recv.join(' · ')}</span></div>
+      <div class="pf send"><span class="t">שולח</span><span class="items">${d.send.join(' · ')}</span></div>
+    </div>
+    <div class="pop-solo">${d.solo}</div>
+  </div>`;
+}
+function place(anchor){
+  const r=anchor.getBoundingClientRect();
+  const pw=pop.offsetWidth||340, ph=pop.offsetHeight||300;
+  let x=r.left+r.width/2-pw/2;
+  x=Math.max(12,Math.min(x,innerWidth-pw-12));
+  let y=r.bottom+10;
+  if(y+ph>innerHeight-10) y=Math.max(10,r.top-ph-10);
+  pop.style.left=x+'px'; pop.style.top=y+'px';
+}
+function showPop(id,anchor,pinned){
+  clearTimeout(popTimer);
+  const m=MODULES.find(x=>x.id===id), d=DETAILS[id];
+  popAnchor=anchor;
+  pop.innerHTML=popHTML(m,d);
+  pop.querySelector('.x').addEventListener('click',hidePop);
+  popPinned=pinned;
+  pop.classList.toggle('pinned',pinned);
+  place(anchor);
+  pop.classList.add('show');
+}
+function hidePop(){popPinned=false;pop.classList.remove('show','pinned');}
+function hidePopSoft(){ if(popPinned) return; popTimer=setTimeout(()=>pop.classList.remove('show'),90); }
+document.addEventListener('click',e=>{
+  if(popPinned && !pop.contains(e.target) && !e.target.closest('.info')) hidePop();
+});
+window.addEventListener('scroll',()=>{ if(!popPinned) pop.classList.remove('show'); else if(popAnchor) place(popAnchor); },true);
+
+window.addEventListener('resize',()=>requestAnimationFrame(drawLinks));
+render();
+window.addEventListener('load',()=>setTimeout(drawLinks,60));
+</script>
+</body>
+</html>
